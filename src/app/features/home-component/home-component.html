@@ -1,0 +1,157 @@
+<section class="pt-20">
+    <div class="relative w-full h-100 left-1/2 -translate-x-1/2 overflow-hidden">
+        <section>
+            <div class="flex transition-transform duration-700 ease-in-out"
+                [style.transform]="'translateX(-' + currentIndex * 100 + '%)'">
+
+                @for (slide of slides; track $index) {
+                <div class="w-full shrink-0 relative h-[300px] md:h-[400px] lg:h-[500px]">
+
+                    <!-- Background -->
+                    <div class="absolute inset-0 bg-cover bg-center"
+                        [style.backgroundImage]="'url(' + slide.image + ')'">
+                    </div>
+
+                    <!-- Overlay -->
+                    <div class="absolute inset-0 bg-linear-to-r from-black/80 via-black/40 to-black/20"></div>
+
+                    <!-- Content -->
+                    <div class="absolute left-[8%] top-1/2 -translate-y-1/2 text-white z-10 max-w-md">
+                        <h2 class="text-[1.875rem] font-bold leading-9 mb-4">
+                            {{ slide.title }}
+                        </h2>
+
+                        <p class="leading-6 font-medium">
+                            {{ slide.subtitle }}
+                        </p>
+
+                        <div class="flex gap-3 mt-5">
+                            <a routerLink="shop"
+                                class="flex-1 text-[#ad46ff] rounded-[.75rem] font-semibold text-center bg-white px-3 py-2 cursor-pointer hover:scale-105 transition">
+                                {{ slide.primaryBtn }}
+                            </a>
+
+                            <a routerLink="shop"
+                                class="flex-1 bg-transparent rounded-[.75rem] border text-center px-3 py-2 cursor-pointer hover:scale-105 transition">
+                                {{ slide.secondaryBtn }}
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+                }
+            </div>
+        </section>
+        <!-- SLIDES WRAPPER -->
+        <!-- Indicators -->
+        <section>
+            <div class="absolute bottom-3 sm:bottom-5 left-1/2 -translate-x-1/2 flex gap-2 sm:gap-3 z-30">
+                @for (slide of slides; track $index; let i = $index) {
+                <button (click)="goToSlide(i)"
+                    class="cursor-pointer w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300"
+                    [ngClass]="currentIndex === i ? 'bg-white scale-125' : 'bg-white/50'">
+                </button>
+                }
+            </div>
+        </section>
+
+        <!-- Arrows -->
+        <section>
+            <div class="absolute inset-0 flex items-center justify-between px-3 sm:px-5 z-20">
+                <button (click)="prev()"
+                    class="cursor-pointer w-10 sm:w-12 md:w-14 aspect-square rounded-full bg-white flex items-center justify-center text-green-500 shadow-md hover:scale-105 transition">
+                    <i class="fa-solid fa-chevron-left text-base sm:text-lg md:text-xl"></i>
+                </button>
+
+                <button (click)="next()"
+                    class="cursor-pointer w-10 sm:w-12 md:w-14 aspect-square rounded-full bg-white flex items-center justify-center text-green-500 shadow-md hover:scale-105 transition">
+                    <i class="fa-solid fa-chevron-right text-base sm:text-lg md:text-xl"></i>
+                </button>
+            </div>
+        </section>
+
+    </div>
+
+    <section class="mt-10 px-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Feature 1 -->
+            <div
+                class="flex items-center gap-3 shadow-lg hover:shadow-2xl transition-all duration-300 py-3 px-3 rounded-2xl">
+                <div class="flex items-center justify-center w-12 h-12 sm:w-15 sm:h-15 bg-blue-50 rounded-full">
+                    <i class="fa-solid fa-truck text-lg sm:text-xl text-[#3383ff]"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-[#364153] leading-6 font-medium">Free Shipping</span>
+                    <p class="text-[#6a7282] text-xs sm:text-sm font-medium">On orders over 500 EGP</p>
+                </div>
+            </div>
+
+            <!-- Feature 2 -->
+            <div
+                class="flex items-center gap-3 shadow-lg hover:shadow-2xl transition-all duration-300 py-3 px-3 rounded-2xl">
+                <div class="flex items-center justify-center w-12 h-12 sm:w-15 sm:h-15 bg-emerald-50 rounded-full">
+                    <i class="fa-solid fa-shield-halved text-lg sm:text-xl text-emerald-500"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-[#364153] leading-6 font-medium">Secure Payment</span>
+                    <p class="text-[#6a7282] text-xs sm:text-sm font-medium">100% secure transactions</p>
+                </div>
+            </div>
+
+            <!-- Feature 3 -->
+            <div
+                class="flex items-center gap-3 shadow-lg hover:shadow-2xl transition-all duration-300 py-3 px-3 rounded-2xl">
+                <div class="flex items-center justify-center w-12 h-12 sm:w-15 sm:h-15 bg-orange-50 rounded-full">
+                    <i class="fa-solid fa-arrow-rotate-left text-lg sm:text-xl text-orange-500"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-[#364153] leading-6 font-medium">Easy Returns</span>
+                    <p class="text-[#6a7282] text-xs sm:text-sm font-medium">14-day return policy</p>
+                </div>
+            </div>
+
+            <!-- Feature 4 -->
+            <div
+                class="flex items-center gap-3 shadow-lg hover:shadow-2xl transition-all duration-300 py-3 px-3 rounded-2xl">
+                <div class="flex items-center justify-center w-12 h-12 sm:w-15 sm:h-15 bg-purple-50 rounded-full">
+                    <i class="fa-solid fa-headset text-lg sm:text-xl text-purple-500"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-[#364153] leading-6 font-medium">24/7 Support</span>
+                    <p class="text-[#6a7282] text-xs sm:text-sm font-medium">Dedicated support team</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-10 px-4">
+        <h2 class="mb-4 text-lg sm:text-xl md:text-2xl font-bold text-[#364153]">Shop By Category</h2>
+
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+
+            @for (category of categories; track $index) {
+            <div
+                class="flex items-center justify-center aspect-square w-full shadow-sm cursor-pointer rounded-[10px] hover:scale-[102%] hover:shadow-xl transition-all duration-300">
+                <a class="flex flex-col gap-3 sm:gap-4 justify-center items-center text-center">
+                    <img class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full object-cover"
+                        [src]="category.image" alt="{{ category.name }}" />
+                    <span class="text-sm sm:text-base md:text-lg text-[#364153] leading-6 font-medium">
+                        {{ category.name }}
+                    </span>
+                </a>
+            </div>
+            }
+        </div>
+    </section>
+
+
+    <section class="py-10">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+            @for (item of products(); track item._id) {
+            <app-shop-component [product]="item"></app-shop-component>
+            }
+        </div>
+
+    </section>
+</section>

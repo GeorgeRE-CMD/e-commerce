@@ -1,0 +1,74 @@
+<section class="pt-24">
+    <div class="container mx-auto flex flex-col lg:flex-row items-start gap-6">
+        <!-- left -->
+        <div class="w-full lg:w-1/4 border border-gray-400 rounded-2xl overflow-hidden shadow-lg">
+            <img class="w-full h-auto object-cover" [src]="productDetail()?.imageCover" alt="">
+        </div>
+
+        <!-- right -->
+        <div class="w-full lg:flex-1 border border-gray-400 rounded-2xl overflow-hidden shadow-lg p-5">
+            <div class="flex flex-wrap gap-3">
+                <a class="bg-[#f0fdf4] text-xs text-[#15803d] hover:text-[#24a652] px-2 py-1 rounded-2xl">
+                    {{productDetail()?.category?.name}}
+                </a>
+                <a class="bg-[#f3f4f6] text-xs text-[#364153] rounded-2xl px-3 py-1">
+                    {{productDetail()?.brand?.name}}
+                </a>
+            </div>
+
+            <h2 class="text-xl md:text-2xl lg:text-3xl leading-tight text-[#101828] font-bold mt-2">
+                {{productDetail()?.title}}
+            </h2>
+
+            <div class="flex flex-wrap gap-4 text-[#101828] text-xl md:text-2xl font-bold py-4">
+                <span [class.line-through]="productDetail()?.priceAfterDiscount">
+                    {{productDetail()?.price}} EGP
+                </span>
+                @if(productDetail()?.priceAfterDiscount){
+                <p>{{productDetail()?.priceAfterDiscount}} EGP</p>
+                }
+            </div>
+
+            <div class="mb-5 flex items-center gap-1 bg-[#f0fdf4] font-medium w-fit py-2 px-2 rounded-2xl">
+                <i class="fa-solid fa-circle text-[#00c950] text-xs"></i>
+                <p class="text-sm text-[#008236]">{{productDetail()?.quantity}} in stock</p>
+            </div>
+
+            <div class="border-t border-[#f3f4f6]"></div>
+            <p class="text-gray-500 font-bold text-base md:text-lg mt-3">
+                {{productDetail()?.description}}
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-3 mt-4">
+                <button (click)="addTocart()"
+                    class="w-full sm:w-1/2 py-4 cursor-pointer text-white bg-[#16a34a] rounded-2xl hover:bg-[#15803D] flex items-center justify-center gap-2">
+                    @if(isLoading()){
+                    <i class="fa-solid fa-spinner fa-spin text-white"></i>
+                    }@else {
+                    <i [ngClass]="success() ? 'fa-check' : 'fa-cart-shopping'" class="fa-solid text-white"></i>
+                    }
+                    Add To Cart
+                </button>
+                <button
+                    class="w-full sm:w-1/2 py-4 cursor-pointer text-white bg-[#101828] rounded-2xl hover:bg-[#1E2939] flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-bolt"></i>
+                    Buy Now
+                </button>
+            </div>
+
+            <button
+                class="w-full py-4 mt-5 border border-gray-300 cursor-pointer text-[#364153] font-medium rounded-2xl hover:border-[#16a34a] hover:text-[#16a34a] flex items-center justify-center gap-2">
+                <i class="fa-regular fa-heart"></i>
+                Add to WishList
+            </button>
+        </div>
+    </div>
+
+    <section class="py-10">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+            @for (item of product(); track item._id) {
+            <app-shop-component [product]="item"></app-shop-component>
+            }
+        </div>
+    </section>
+</section>

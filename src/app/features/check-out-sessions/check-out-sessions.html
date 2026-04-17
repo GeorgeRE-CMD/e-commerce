@@ -1,0 +1,222 @@
+<section class="pt-20 container mx-auto">
+    <!-- Breadcrumb + Header -->
+    <section>
+        <div class="flex items-center gap-3 text-gray-400 text-[.875rem] font-medium leading-5">
+            <a routerLink="/home" class="hover:text-[#16a34a]">Home</a>
+            <span>/</span>
+            <a routerLink="/cart" class="hover:text-[#16a34a]">Cart</a>
+            <span>/</span>
+            <span>Checkout</span>
+        </div>
+
+        <div class="flex items-center justify-between gap-3 text-[1.875rem] font-[700] leading-9 mt-5">
+            <div class="flex items-center gap-3">
+                <div class="w-13 h-13 bg-[#158840] flex items-center justify-center rounded-2xl">
+                    <i class="fa-solid fa-receipt text-white"></i>
+                </div>
+                <h2>Complete Your Order</h2>
+            </div>
+            <div class="flex items-center hover:bg-[#F0FDF4]">
+                <a routerLink="/cart" class="hover:text-[#15803d] text-[1rem] leading-6 px2 py-2 text-[#16a34a]">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Back To Cart</span>
+                </a>
+            </div>
+        </div>
+        <p class="leading-6 font-medium text-[#6a7282] ps-1 mt-1">
+            Review your items and complete your purchase
+        </p>
+    </section>
+
+    <!-- Main Layout: Left + Right -->
+    <div class="flex flex-col lg:flex-row gap-8 mt-10">
+        <!-- Left Column -->
+        <div class="flex-1 space-y-8">
+            <!-- Shipping Address -->
+            <section class="rounded-2xl shadow-md w-full">
+                <div class="flex flex-col gap-1 bg-[#158940] p-4">
+                    <div class="flex items-center gap-2 text-[1.125rem] text-white font-bold leading-7">
+                        <i class="fa-solid fa-home"></i>
+                        <h3>Shipping Address</h3>
+                    </div>
+                    <p class="text-sm text-[#dcfce7] font-medium">
+                        Where should we deliver your order?
+                    </p>
+                </div>
+
+                <div class="flex items-center gap-3 mt-7 bg-[#eff6ff] w-[95%] mx-auto ps-4 py-5 rounded-lg shadow-sm">
+                    <div class="w-8 h-8 flex items-center justify-center rounded-full bg-[#dbeafe]">
+                        <i class="fa-solid fa-circle-info text-[#155dfc]"></i>
+                    </div>
+                    <div>
+                        <p class="text-[#193cb8] text-sm font-medium">Delivery Information</p>
+                        <p class="text-[#155dfc] text-xs font-medium">
+                            Please ensure your address is accurate for smooth delivery
+                        </p>
+                    </div>
+                </div>
+
+                <section class="mt-6 space-y-4 px-6 pb-6">
+                    <!-- City -->
+                    <form [formGroup]="addressForm">
+
+
+                        <div class="flex flex-col">
+                            <label for="city" class="mb-1 ps-1">
+                                City <span class="text-red-500">*</span>
+                            </label>
+                            <input formControlName="city" type="text" id="city" name="city"
+                                placeholder="e.g Cairo, Alexandria, Giza"
+                                class="w-full ps-5 py-3 rounded-sm border border-gray-400 focus:outline-none focus:ring-0 focus:border-[#22c55e]" />
+                        </div>
+
+                        <!-- Street Address -->
+                        <div class="flex flex-col">
+                            <label for="address" class="mb-1 ps-1">
+                                Street Address <span class="text-red-500">*</span>
+                            </label>
+                            <textarea formControlName="details" id="address" name="address"
+                                placeholder="Street name, building number, floor, apartment"
+                                class="w-full ps-5 py-3 rounded-sm border border-gray-400 focus:outline-none focus:ring-0 focus:border-[#22c55e] resize-y"></textarea>
+                        </div>
+
+                        <!-- Phone Number -->
+                        <div class="flex flex-col">
+                            <label for="phone" class="mb-1 ps-1">
+                                Phone Number <span class="text-red-500">*</span>
+                            </label>
+                            <input formControlName="phone" type="tel" id="phone" placeholder="Egyptian numbers only"
+                                class="w-full ps-5 py-3 rounded-sm border border-gray-400 focus:outline-none focus:ring-0 focus:border-[#22c55e]" />
+                        </div>
+                    </form>
+                </section>
+            </section>
+
+            <!-- Payment Method -->
+            <section class="rounded-2xl shadow-md w-full">
+                <div class="flex flex-col gap-1 bg-[#158940] p-4">
+                    <div class="flex items-center gap-2 text-[1.125rem] text-white font-bold leading-7">
+                        <i class="fa-solid fa-wallet"></i>
+                        <h3>Payment method</h3>
+                    </div>
+                    <p class="text-sm text-[#dcfce7] font-medium">
+                        Choose how you'd like to pay
+                    </p>
+                </div>
+
+                <section>
+                    <!-- Cash on Delivery -->
+                    <div (click)="handlePayment('cash')"
+                        [ngClass]="offline() ? 'bg-green-100 border-green-500' : 'bg-white border-gray-200'"
+                        class="flex items-center justify-between border-2 rounded-2xl w-[90%] mx-auto p-4 mt-5 cursor-pointer transition-all">
+
+                        <!-- left side -->
+                        <div class="flex items-center gap-3">
+
+                            <!-- radio -->
+                            <input type="radio" [checked]="offline()"
+                                class="accent-green-600 w-5 h-5 pointer-events-none">
+
+                            <!-- icon -->
+                            <span class="flex items-center justify-center w-10 h-10 rounded bg-green-500">
+                                <i class="fa-solid fa-money-bill text-white"></i>
+                            </span>
+
+                            <!-- text -->
+                            <div>
+                                <p class="font-bold text-green-800">Cash on Delivery</p>
+                                <p class="text-sm text-gray-500">Pay when your order arrives</p>
+                            </div>
+
+                        </div>
+
+                        <!-- check icon -->
+                        <i [ngClass]="offline() ? 'fa-check text-green-600' : ''" class="fa-solid text-lg">
+                        </i>
+
+                    </div>
+
+                    <!-- Visa Card -->
+                    <div (click)="handlePayment('online')"
+                        [ngClass]="online() ? 'bg-green-100 border-green-500' : 'bg-white border-gray-200'"
+                        class="flex items-center justify-between border-2 rounded-2xl w-[90%] mx-auto p-4 mt-3 cursor-pointer transition-all">
+
+                        <!-- left -->
+                        <div class="flex items-center gap-3">
+
+                            <!-- radio -->
+                            <input type="radio" [checked]="online()"
+                                class="accent-green-600 w-5 h-5 pointer-events-none">
+
+                            <!-- icon -->
+                            <span class="flex items-center justify-center w-10 h-10 rounded bg-green-500">
+                                <i class="fa-solid fa-credit-card text-white"></i>
+                            </span>
+
+                            <!-- text -->
+                            <div>
+                                <p class="font-bold text-green-800">Visa / Card</p>
+                                <p class="text-sm text-gray-500">Pay securely with your card</p>
+                            </div>
+
+                        </div>
+
+                        <!-- check -->
+                        <i [ngClass]="online() ? 'fa-check text-green-600' : ''" class="fa-solid text-lg">
+                        </i>
+
+                    </div>
+                </section>
+            </section>
+        </div>
+
+        <!-- Right Column: Order Summary -->
+        <div class="w-full lg:w-1/3 lg:sticky lg:top-20 self-start">
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <p>1item</p>
+                <h2 class="text-lg font-semibold mb-4">Order Summary</h2>
+
+                <!-- Item -->
+                <div class="flex justify-between mb-2">
+                    <span>Woman Shawl</span>
+                    <span>149 EGP</span>
+                </div>
+
+                <!-- Subtotal -->
+                <div class="flex justify-between mb-2 text-gray-600">
+                    <span>Subtotal</span>
+                    <span>149 EGP</span>
+                </div>
+
+                <!-- Shipping -->
+                <div class="flex justify-between mb-2 text-gray-600">
+                    <span>Shipping</span>
+                    <span>50 EGP</span>
+                </div>
+
+                <!-- Total -->
+                <div class="flex justify-between font-bold text-lg mb-4">
+                    <span>Total</span>
+                    <span>199 EGP</span>
+                </div>
+
+                <!-- Place Order Button -->
+                <button class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition">
+                    Place Order
+                </button>
+
+                <!-- Footer Icons -->
+                <div class="flex justify-around mt-4 text-sm text-gray-600">
+                    <div class="flex flex-col items-center">
+                        <i class="fas fa-lock text-green-600 mb-1"></i>
+                        <span>Secure</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <i class="fas fa-truck text-green-600 mb-1"></i>
+                        <span>Fast Delivery</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
